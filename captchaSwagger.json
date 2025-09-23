@@ -10,29 +10,55 @@
   "paths": {
     "/siteverify": {
       "post": {
+        "summary": "Verify reCAPTCHA token",
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "secret",
             "in": "formData",
+            "description": "Your secret key",
             "required": true,
             "type": "string"
           },
           {
             "name": "response",
             "in": "formData",
+            "description": "The token from the client",
             "required": true,
             "type": "string"
           },
           {
             "name": "remoteip",
             "in": "formData",
+            "description": "Optional user IP",
             "required": false,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Captcha verification response"
+            "description": "Verification response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "challenge_ts": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "hostname": {
+                  "type": "string"
+                },
+                "error-codes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }
