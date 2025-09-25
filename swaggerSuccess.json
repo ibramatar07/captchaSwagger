@@ -1,0 +1,73 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Google reCAPTCHA Verify"
+  },
+  "host": "www.google.com",
+  "basePath": "/recaptcha/api",
+  "schemes": ["https"],
+  "consumes": ["application/x-www-form-urlencoded"],
+  "produces": ["application/json"],
+  "paths": {
+    "/siteverify": {
+      "post": {
+        "summary": "Verify reCAPTCHA token",
+        "parameters": [
+          {
+            "name": "secret",
+            "in": "formData",
+            "description": "Your secret key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "response",
+            "in": "formData",
+            "description": "The token from the client",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "remoteip",
+            "in": "formData",
+            "description": "Optional user IP",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification response",
+            "schema": {
+              "$ref": "#/definitions/VerificationResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "VerificationResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "challenge_ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "error-codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
